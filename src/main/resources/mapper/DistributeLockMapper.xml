@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roger.mapper.DistributeLockMapper">
+
+    <insert id="insertDistributeLock" parameterType="DbDistriLock">
+        insert into distribute_lock_tab(id,distribute_lock_name)values (#{id},#{distributeLockName})
+    </insert>
+
+    <delete id="delDistributeLock" parameterType="java.lang.String">
+        delete from distribute_lock_tab where id = #{id}
+    </delete>
+
+    <delete id="delDistriLockByObject" parameterType="DbDistriLock">
+        delete from distribute_lock_tab where id = #{id} and distribute_lock_name = #{distributeLockName}
+    </delete>
+</mapper>
