@@ -10,25 +10,26 @@ import java.util.concurrent.CountDownLatch;
 
 public class TestZkLockV2 {
 
-    private static int NUM = 50;
+    private static int NUM = 5;
     private CountDownLatch latch = new CountDownLatch(NUM);
 
     @Test
     public void testLock() throws Exception{
         String lockPath = "/zk-book";
+
         for(int i = 0 ; i < NUM; i ++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        DistributeLock zkDistributeLockV1 = new ZkLockV1();
+                        DistributeLock zkLockV2 = new ZkLockV2();
                         String threadName = Thread.currentThread().getName();
                         System.out.println(threadName + ":开始加锁");
                         String version = threadName.substring(threadName.lastIndexOf("-")+1);
-                        zkDistributeLockV1.lock(lockPath,version);
+                        zkLockV2.lock(lockPath,version);
                         System.out.println( Thread.currentThread().getName()+ ":加锁成功");
                         Thread.sleep(1000);
-                        zkDistributeLockV1.unLock(lockPath,version);
+                        zkLockV2.unLock(lockPath,version);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
